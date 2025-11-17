@@ -3,16 +3,16 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
-using API.DTOs; // 确保有这个 using
+using API.DTOs; 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore; // 为了 AnyAsync
+using Microsoft.EntityFrameworkCore; 
 
 namespace API.Controllers;
 
 public class AccountController(AppDbContext context) : BaseApiController
 {
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> Register([FromBody] RegisterDTO registerDto)
+    public async Task<ActionResult<AppUser>> Register(RegisterDTO registerDto)
     {
         // Debugging output
         Console.WriteLine($"RegisterDTO received: {registerDto?.UserName}, {registerDto?.Email}");
@@ -58,6 +58,30 @@ public class AccountController(AppDbContext context) : BaseApiController
         context.Users.Add(user);
         await context.SaveChangesAsync();
         
+        return user;
+    }
+    [HttpPost("login")]
+    public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+    {
+        var user = await context.Users
+            .SingleOrDefaultAsync(u => u.Email == loginDto.Email);
+
+        if (user == null)
+        {
+            return Unauthorized("Invalid email address");
+        }
+
+        using var hmac = new HMACSHA512(user.PasswordSalt);
+        var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(loginDto.Password));
+
+        for (int i = 0; i < computedHash.Length; i++)
+        {
+            if (computedHash[i] != user.PasswordHash[i])
+            {
+                return Unauthorized("Invalid password");
+            }
+        }
+
         return user;
     }
 }
