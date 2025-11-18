@@ -1,6 +1,6 @@
 using System;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
+using API.Extensions;
 using API.Data;
 using API.Entities;
 using API.DTOs; 
@@ -59,13 +59,7 @@ public class AccountController(AppDbContext context, ITokenServices tokenService
         context.Users.Add(user);
         await context.SaveChangesAsync();
         
-        return new UserDto
-        {
-            Id = user.Id,
-            Email = user.Email,
-            Username = user.UserName,
-            Token = tokenServices.CreateToken(user)
-        };
+        return user.ToDto(tokenServices);
     }
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
@@ -89,12 +83,6 @@ public class AccountController(AppDbContext context, ITokenServices tokenService
             }
         }
 
-        return new UserDto
-        {
-            Id = user.Id,
-            Email = user.Email,
-            Username = user.UserName,
-            Token = tokenServices.CreateToken(user)
-        };
+        return user.ToDto(tokenServices);
     }
 }
