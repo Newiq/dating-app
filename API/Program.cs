@@ -10,7 +10,7 @@ builder.Services.AddDbContext<API.Data.AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
-
+builder.Services.AddScoped<API.Interfaces.ITokenServices, API.Services.TokenServices>();
 
 var app = builder.Build();
 
