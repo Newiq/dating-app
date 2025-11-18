@@ -5,14 +5,15 @@ using API.Data;
 using API.Entities;
 using API.DTOs; 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using API.Interfaces;
 
 namespace API.Controllers;
 
-public class AccountController(AppDbContext context) : BaseApiController
+public class AccountController(AppDbContext context, ITokenServices tokenServices) : BaseApiController
 {
     [HttpPost("register")]
-    public async Task<ActionResult<AppUser>> Register(RegisterDTO registerDto)
+    public async Task<ActionResult<UserDto>> Register(RegisterDTO registerDto)
     {
         // Debugging output
         Console.WriteLine($"RegisterDTO received: {registerDto?.UserName}, {registerDto?.Email}");
@@ -58,10 +59,16 @@ public class AccountController(AppDbContext context) : BaseApiController
         context.Users.Add(user);
         await context.SaveChangesAsync();
         
-        return user;
+        return new UserDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Username = user.UserName,
+            Token = tokenServices.CreateToken(user)
+        };
     }
     [HttpPost("login")]
-    public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+    public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await context.Users
             .SingleOrDefaultAsync(u => u.Email == loginDto.Email);
@@ -82,6 +89,12 @@ public class AccountController(AppDbContext context) : BaseApiController
             }
         }
 
-        return user;
+        return new UserDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Username = user.UserName,
+            Token = tokenServices.CreateToken(user)
+        };
     }
 }
