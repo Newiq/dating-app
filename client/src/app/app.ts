@@ -1,6 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Nav } from "../layout/nav/nav";
+import { lastValueFrom } from 'rxjs';
+import { AccountService } from '../core/service/account-service';
 
 @Component({
   selector: 'app-root',
@@ -9,23 +11,29 @@ import { Nav } from "../layout/nav/nav";
   styleUrl: './app.css'
 })
 export class App implements OnInit{
+  private accountService = inject(AccountService);
   private http = inject(HttpClient);
   protected readonly title = 'Matchly';
   protected members = signal<any>([]);
   
-
-  ngOnInit(): void {
-    this.http.get<{ title: string }>('http://localhost:5001/api/members').subscribe({
-      next: (data) => {
-        this.members.set(data);
-      },
-      error: (err) => {
-        console.error('Failed to fetch app info', err);
-      },
-      complete: () => {        
-        console.log('App info fetch complete');
-      }
-    });
+  async ngOnInit(){
+    this.members.set(await this.getMembers());
+    this.setCurrentUser();
   }
+  setCurrentUser(){
+    const userString = localStorage.getItem('user');
+    if(!userString) return;
+    const user = JSON.parse(userString);
+    this.accountService.currentUser.set(user);
+  }
+
+  async getMembers(){
+    try{
+      return lastValueFrom(this.http.get('http://localhost:5001/api/members'));
+    }catch(error){
+      console.log(error);
+      throw error;
   
+  }
+}
 }

@@ -29,16 +29,29 @@
     </div>
     
     <div class="navbar-end">
-        <form #loginForm="ngForm" (ngSubmit)="login()" class="flex gap-2 items-center">
+        @if(accountService.currentUser(); as user) {
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn m-1 text-xl gap-3 cursor-pointer">
+                    <img src="/user.jpg" alt="user avatar" class="w-8 h-8 rounded-full">
+                    <span>{{user.userName}}</span>
+                </div>
+                <ul tabindex="-1" class="dropdown-content  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    <li><a>Edit Profile</a></li>
+                    <li><a (click)="logout()">Logout</a></li>
+                </ul>
+            </div>
+
+        } @else{
+            <form #loginForm="ngForm" (ngSubmit)="login()" class="flex gap-2 items-center">
             <input 
                 [(ngModel)]="creds.email" name="email" 
                 type="text" placeholder="Email" class="input" />
             <input 
                 [(ngModel)]="creds.password" name="password"
-                type="text" placeholder="Password" class="input" />
+                type="password" placeholder="Password" class="input" />
             <button type="submit" class="btn">Login</button>
         </form>
-        
+        }
     </div>
 </header>
 
