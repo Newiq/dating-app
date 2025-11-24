@@ -1,15 +1,16 @@
-<div class="card max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-md ">
+<app-nav/>
+<div class="card mx-auto mt-10 w-9/10 p-6 bg-white rounded-lg shadow-md ">
   <h3 class="text-3xl font-bold underline text-amber-400">{{title}}</h3>
 
   <ul>
     @for (member of members(); track member.id) {
       <li class="list-row items-center">
         <div class="avatar">
-          <div class = "ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-          <img src="/user.jpg" alt="user avatar" />
+          <div class = "ring-primary ring-offset-base-100 w-18 rounded-full ring-2 ring-offset-2 m-4">
+            <img src="/user.jpg" alt="user avatar" />
+          </div>
         </div>
-        </div>
-        <span class="text-lg font-medium">{{member.username}}</span>
+        <span class="ml-4 text-lg font-semibold text-gray-700">{{member.userName}}</span>
       </li>
     } 
   </ul>
