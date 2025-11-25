@@ -11,15 +11,17 @@
                 </svg>
             Matchly
         </a>
-        <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1">
-            <li><a routerLink="/members" routerLinkActive="text-accent">Matches</a></li>
-            <li>
-                <a routerLink="/lists" routerLinkActive="text-accent">Lists</a>
-            </li>
-            <li><a routerLink="/messages" routerLinkActive="text-accent">Messages</a></li>
-            </ul>
-        </div>
+        <nav class="navbar-center hidden lg:flex">
+            @if (accountService.currentUser()) {
+                <ul class="menu menu-horizontal px-1">
+                    <li><a routerLink="/members" routerLinkActive="text-accent">Matches</a></li>
+                    <li>
+                        <a routerLink="/lists" routerLinkActive="text-accent">Lists</a>
+                    </li>
+                    <li><a routerLink="/messages" routerLinkActive="text-accent">Messages</a></li>
+                </ul>
+            }
+        </nav>
     </div>
     
     <div class="navbar-end">
