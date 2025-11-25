@@ -3,18 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Nav } from "../layout/nav/nav";
 import { lastValueFrom } from 'rxjs';
 import { AccountService } from '../core/service/account-service';
-import { Home } from "../features/home/home";
-import { Register } from "../features/account/register/register";
 import { User } from '../types/user';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [Nav, Home, Register],
+  imports: [Nav, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit{
   private accountService = inject(AccountService);
+  protected router = inject(Router);
   private http = inject(HttpClient);
   protected readonly title = 'Matchly';
   protected members = signal<User[]>([]);

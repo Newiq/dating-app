@@ -5,7 +5,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
         </div>
         </div>
-        <a class="btn btn-ghost text-xl">
+        <a [routerLinkActiveOptions]="{exact:true}" routerLink="/" routerLinkActive="text-accent" class="btn btn-ghost text-xl">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                 </svg>
@@ -13,17 +13,11 @@
         </a>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
-            <li><a>Matches</a></li>
+            <li><a routerLink="/members" routerLinkActive="text-accent">Matches</a></li>
             <li>
-                <details>
-                <summary>Lists</summary>
-                <ul class="p-2">
-                    <li><a>Submenu 1</a></li>
-                    <li><a>Submenu 2</a></li>
-                </ul>
-                </details>
+                <a routerLink="/lists" routerLinkActive="text-accent">Lists</a>
             </li>
-            <li><a>Messages</a></li>
+            <li><a routerLink="/messages" routerLinkActive="text-accent">Messages</a></li>
             </ul>
         </div>
     </div>
@@ -33,7 +27,7 @@
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn m-1 text-xl gap-3 cursor-pointer">
                     <img src="/user.jpg" alt="user avatar" class="w-8 h-8 rounded-full">
-                    <span>{{user.userName}}</span>
+                    <span>{{user?.userName || 'Unknown'}}</span>
                 </div>
                 <ul tabindex="-1" class="dropdown-content  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                     <li><a>Edit Profile</a></li>
