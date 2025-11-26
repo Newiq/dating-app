@@ -1,1 +1,18 @@
-<p>server-error works!</p>
+<div class="card bg-base-100 gap-3 w-4xl mx-auto p-6 text-center rounded-xl shadow-lg mt-5 items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-32 text-error">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+    </svg>
+    <h1 class="card-title justify-center text-4xl">Server Error</h1>
+    
+    @if (error) {
+        <p class="card-body text-xl text-center">{{error.message}}</p>
+        <button class="btn btn-primary" (click)="detailsToggled()">Details</button>
+        @if (showDetails) {
+            <pre class="text-left mt-4 p-4 bg-gray-100 rounded-lg overflow-x-auto">{{error.details}}</pre>
+        }
+    } @else {
+        <p class="card-body text-xl text-center">An unknown server error occurred</p>
+        <p class="text-sm text-gray-500">No additional details available</p>
+    }
+    <button class="btn btn-primary" (click)="goHome()">Go to Home</button>
+</div>
