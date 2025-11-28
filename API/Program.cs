@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Middleware;
 using API.Data;
+using API.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 builder.Services.AddCors();
 builder.Services.AddScoped<API.Interfaces.ITokenServices, API.Services.TokenServices>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
