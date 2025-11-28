@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace API.Entities;
 public class AppUser
 {
@@ -6,7 +8,13 @@ public class AppUser
 
     public required string Email { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public byte[] PasswordHash { get; set; } = null!;
     public byte[] PasswordSalt { get; set; } = null!;
+
+    //Nav Properties
+
+    public Member Member{ get; set; } = null!;
 
 }
