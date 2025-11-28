@@ -14,7 +14,8 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
 
     public async Task<IReadOnlyList<Member>> GetMembersAllAsync()
     {
-        return await context.Members.ToListAsync();
+        return await context.Members
+        .ToListAsync();
     }
 
     public async Task<IReadOnlyList<Photo>> GetPhotosAsync(string memberId)
