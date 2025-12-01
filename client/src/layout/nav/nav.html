@@ -28,8 +28,8 @@
     <div class="navbar-end">
         @if(accountService.currentUser(); as user) {
             <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="btn m-1 text-xl gap-3 cursor-pointer">
-                    <img src="/user.jpg" alt="user avatar" class="w-8 h-8 rounded-full">
+                <div tabindex="0" role="button" class="flex items-center  text-xl gap-3 cursor-pointer">
+                    <img [src]="user?.imageUrl || '/user.png'" alt="user avatar" class="w-10 h-10 rounded-full">
                     <span>{{user?.userName || 'Unknown'}}</span>
                 </div>
                 <ul tabindex="-1" class="dropdown-content  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
