@@ -23,6 +23,9 @@
                 </ul>
             }
         </nav>
+        @if(busyService.busyRequestCount()>0){
+            <span class="loading loading-spinner text-accent"></span>
+        }
     </div>
     
     <div class="navbar-end">
