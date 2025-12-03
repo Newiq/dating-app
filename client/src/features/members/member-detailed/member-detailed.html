@@ -1,4 +1,4 @@
-@if(member(); as member){
+@if(memberService.member(); as member){
     <div class="flex gap-6">
         <div class="card bg-base-100 flex flex-col h-[85vh] w-1/4">
             <img src = "{{member.imageUrl || '/user.jpg'}} " alt="image of member" 
@@ -32,7 +32,7 @@
                 @if(isCurrentUser()){
                     <button 
                     (click)="memberService.editMode.set(!memberService.editMode())"
-                    class="btn btn-outline btn-primary">{{memberService.editMode()?'cancel':'edit'}}</button>
+                    class="btn btn-outline btn-primary">{{memberService.editMode()?'Cancel':'Edit'}}</button>
                 }
             </div>
             
