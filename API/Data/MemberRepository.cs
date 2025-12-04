@@ -13,10 +13,13 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
         .FindAsync(id);
     }
 
+#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     public async Task<Member?> GetMemberForUpdate(string id)
+#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     {
         return await context.Members
         .Include(x => x.User)
+        .Include(x => x.Photos)
         .SingleOrDefaultAsync( x => x.Id == id);
     }
 
